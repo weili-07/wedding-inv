@@ -21,16 +21,57 @@ function setupMemoryGame() {
         gateLocked: "Win the game to unlock RSVP.",
         gateSkipped: "Game skipped. RSVP is now unlocked.",
         gateWon: "Great job. RSVP is now unlocked.",
-        doneAlert: `You finished in ${moves} moves. See you at The Petals!`
+        doneTitle: "You did it!",
+        doneBody: `You finished in ${moves} moves. See you at The Petals!`,
+        openRsvpNow: "Open RSVP Now",
+        close: "Close"
       },
       zh: {
         gateLocked: "完成游戏后可解锁回函。",
         gateSkipped: "已跳过游戏，回函已解锁。",
         gateWon: "太棒了，回函已解锁。",
-        doneAlert: `你用了 ${moves} 步完成游戏，婚礼见！`
+        doneTitle: "完成啦！",
+        doneBody: `你用了 ${moves} 步完成游戏，婚礼见！`,
+        openRsvpNow: "立即回函",
+        close: "关闭"
       }
     };
     return text[lang]?.[key] || text.en[key];
+  }
+
+  function showWinModal() {
+    const existing = document.getElementById("win-modal");
+    if (existing) existing.remove();
+
+    const modal = document.createElement("div");
+    modal.id = "win-modal";
+    modal.className = "win-modal";
+    modal.innerHTML = `
+      <div class="win-modal-card" role="dialog" aria-modal="true" aria-labelledby="win-title">
+        <h3 id="win-title">${gameText("doneTitle")}</h3>
+        <p>${gameText("doneBody")}</p>
+        <div class="cta-row">
+          <button type="button" class="btn btn-primary" id="win-open-rsvp">${gameText("openRsvpNow")}</button>
+          <button type="button" class="btn btn-outline" id="win-close">${gameText("close")}</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    const closeModal = () => modal.remove();
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    modal.querySelector("#win-close")?.addEventListener("click", closeModal);
+    modal.querySelector("#win-open-rsvp")?.addEventListener("click", () => {
+      const rsvpBtn = rsvpSection?.querySelector("a.btn.btn-primary");
+      if (rsvpBtn instanceof HTMLAnchorElement) {
+        window.open(rsvpBtn.href, "_blank", "noopener,noreferrer");
+      }
+      closeModal();
+    });
   }
 
   function unlockRsvp(reason) {
@@ -116,8 +157,8 @@ function setupMemoryGame() {
         const done = [...grid.querySelectorAll(".memory-card")].every((el) => el.classList.contains("matched"));
         if (done) {
           setTimeout(() => {
-            alert(gameText("doneAlert"));
             unlockRsvp("win");
+            showWinModal();
           }, 100);
         }
       } else {

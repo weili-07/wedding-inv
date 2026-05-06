@@ -8,17 +8,19 @@ const INVITE_DATA = {
 };
 
 const LANG_KEY = "inviteLang";
+const MUSIC_WANTED_KEY = "inviteMusicWanted";
+const MUSIC_TIME_KEY = "inviteMusicTime";
 let currentLang = localStorage.getItem(LANG_KEY) || "en";
 
 const TRANSLATIONS = {
   en: {
     welcomeLine: "Welcome to our Beginning",
     welcomeLinePunctuated: "Welcome to our Beginning.",
-    introEyebrow: "A Cinematic Invitation",
-    introSubtitle: "A futuristic maker celebration for Wei Li and Deborah.",
+    introEyebrow: "A Love Story Invitation",
+    introSubtitle: "A heartfelt celebration for Wei Li and Deborah.",
     enterInvitation: "Enter Invitation",
     navHome: "Home",
-    navStory: "Our Story",
+    navStory: "Details",
     navMap: "Map",
     navPlay: "Play & RSVP",
     homeTogether: "Together with love and joy",
@@ -40,7 +42,7 @@ const TRANSLATIONS = {
     scheduleCeremonyDetail: "10:00 AM | Wedding ceremony begins.",
     scheduleLunch: "Lunch",
     scheduleLunchDetail: "11:30 AM | Lunch and celebration.",
-    storyEyebrow: "Futuristic Maker Vibes",
+    storyEyebrow: "Wedding Celebration",
     storyTitle: "Celebration Details",
     storyLede: "Join Wei Li and Deborah for a warm celebration at The Petals. Layer by layer, loop by loop, we build one beautiful future together.",
     scheduleSnapshot: "Schedule Timeline",
@@ -83,16 +85,20 @@ const TRANSLATIONS = {
     openRsvpForm: "Open RSVP Form",
     musicOn: "Music On",
     musicOff: "Music Off",
+    gameWonTitle: "You did it!",
+    gameWonBody: "You finished in {{moves}} moves. See you at The Petals!",
+    openRsvpNow: "Open RSVP Now",
+    close: "Close",
     langToggle: "中文"
   },
   zh: {
     welcomeLine: "欢迎来到我们的起点",
     welcomeLinePunctuated: "欢迎来到我们的起点。",
-    introEyebrow: "电影感婚礼邀请",
-    introSubtitle: "为 Wei Li 和 Deborah 打造的未来感婚礼庆典。",
+    introEyebrow: "爱的邀请函",
+    introSubtitle: "诚邀您一同见证 Wei Li 和 Deborah 的幸福时刻。",
     enterInvitation: "进入邀请函",
     navHome: "首页",
-    navStory: "我们的故事",
+    navStory: "庆典详情",
     navMap: "地图",
     navPlay: "游戏与回函",
     homeTogether: "携手同心，满怀喜悦",
@@ -114,7 +120,7 @@ const TRANSLATIONS = {
     scheduleCeremonyDetail: "上午 10:00 | 婚礼仪式开始。",
     scheduleLunch: "午宴",
     scheduleLunchDetail: "上午 11:30 | 午宴与庆祝。",
-    storyEyebrow: "未来感手作风格",
+    storyEyebrow: "婚礼庆典",
     storyTitle: "庆典详情",
     storyLede: "诚邀您在 The Petals 见证 Wei Li 与 Deborah 的幸福时刻。一层层构筑，一针针编织，我们共同创造美好未来。",
     scheduleSnapshot: "时间轴流程",
@@ -145,7 +151,7 @@ const TRANSLATIONS = {
     openGoogleMaps: "打开 Google 地图",
     gameEyebrow: "婚礼小游戏",
     gameTitle: "先玩游戏再回函",
-    gameLede: "完成配对游戏后即可前往回函页面。",
+    gameLede: "完成照片配对后即可前往回函页面。",
     memoryTitle: "照片配对记忆",
     memoryDesc: "配对所有照片卡片即可解锁回函。",
     movesLabel: "步数：",
@@ -157,12 +163,17 @@ const TRANSLATIONS = {
     openRsvpForm: "打开回函表单",
     musicOn: "开启音乐",
     musicOff: "关闭音乐",
+    gameWonTitle: "完成啦！",
+    gameWonBody: "你用了 {{moves}} 步完成游戏，婚礼见！",
+    openRsvpNow: "立即回函",
+    close: "关闭",
     langToggle: "EN"
   }
 };
 
 const audio = document.getElementById("bg-music");
 const musicToggle = document.getElementById("music-toggle");
+const musicLabel = document.querySelector(".music-toggle");
 let audioContext = null;
 let droneNodes = [];
 let droneActive = false;
@@ -217,8 +228,11 @@ function setupLanguageToggle() {
 
 function updateMusicButtonText() {
   if (!musicToggle) return;
-  const isOn = musicToggle.getAttribute("aria-pressed") === "true";
-  musicToggle.textContent = isOn ? t("musicOff") : t("musicOn");
+  const isOn = musicToggle.checked;
+  if (musicLabel) {
+    musicLabel.setAttribute("title", isOn ? t("musicOff") : t("musicOn"));
+    musicLabel.setAttribute("aria-label", isOn ? t("musicOff") : t("musicOn"));
+  }
 }
 
 function bindInviteData() {
@@ -364,8 +378,16 @@ function stopDroneFallback() {
   droneActive = false;
 }
 
+function persistMusicState() {
+  if (!musicToggle) return;
+  localStorage.setItem(MUSIC_WANTED_KEY, musicToggle.checked ? "1" : "0");
+  if (audio && Number.isFinite(audio.currentTime)) {
+    localStorage.setItem(MUSIC_TIME_KEY, String(audio.currentTime));
+  }
+}
+
 async function toggleMusic(forceOn = null) {
-  const shouldPlay = forceOn !== null ? forceOn : musicToggle?.getAttribute("aria-pressed") !== "true";
+  const shouldPlay = forceOn !== null ? forceOn : !musicToggle?.checked;
 
   if (!musicToggle) return;
 
@@ -381,10 +403,18 @@ async function toggleMusic(forceOn = null) {
     }
 
     if (!played) {
-      await startDroneFallback();
+      try {
+        await startDroneFallback();
+      } catch {
+        musicToggle.checked = false;
+        persistMusicState();
+        updateMusicButtonText();
+        return;
+      }
     }
 
-    musicToggle.setAttribute("aria-pressed", "true");
+    musicToggle.checked = true;
+    persistMusicState();
     updateMusicButtonText();
   } else {
     if (audio) {
@@ -392,16 +422,44 @@ async function toggleMusic(forceOn = null) {
       audio.currentTime = 0;
     }
     if (droneActive) stopDroneFallback();
-    musicToggle.setAttribute("aria-pressed", "false");
+    musicToggle.checked = false;
+    persistMusicState();
+    updateMusicButtonText();
+  }
+}
+
+async function restoreMusicState() {
+  if (!musicToggle) return;
+
+  const wanted = localStorage.getItem(MUSIC_WANTED_KEY) === "1";
+  const savedTime = Number(localStorage.getItem(MUSIC_TIME_KEY) || "0");
+
+  if (audio && Number.isFinite(savedTime) && savedTime > 0) {
+    audio.currentTime = savedTime;
+  }
+
+  if (wanted) {
+    await toggleMusic(true);
+  } else {
+    musicToggle.checked = false;
     updateMusicButtonText();
   }
 }
 
 function setupMusicControl() {
   if (!musicToggle) return;
-  musicToggle.addEventListener("click", () => {
-    toggleMusic();
+  musicToggle.addEventListener("change", () => {
+    toggleMusic(musicToggle.checked);
   });
+
+  if (audio) {
+    audio.addEventListener("timeupdate", () => {
+      if (musicToggle.checked) persistMusicState();
+    });
+  }
+
+  window.addEventListener("beforeunload", persistMusicState);
+  restoreMusicState();
 }
 
 bindInviteData();

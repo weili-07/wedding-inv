@@ -20,7 +20,6 @@
       <a href="map.html" data-i18n="navMap">Map</a>
       <a href="play.html" data-i18n="navPlay">Play & RSVP</a>
     </nav>
-    <button id="music-toggle" class="btn btn-outline" aria-pressed="false">Music On</button>
   </header>
 
   <main>
@@ -73,6 +72,12 @@
   <audio id="bg-music" loop preload="none">
     <source src="assets/music/song.mp3" type="audio/mpeg" />
   </audio>
+
+  <label class="music-toggle" for="music-toggle" aria-label="Music toggle" title="Music On">
+    <span class="music-icon" aria-hidden="true">♪</span>
+    <input id="music-toggle" type="checkbox" role="switch" />
+    <span class="music-slider" aria-hidden="true"></span>
+  </label>
 
   <button id="lang-toggle" class="lang-toggle-btn" type="button">中文</button>
 
