@@ -59,8 +59,10 @@ const TRANSLATIONS = {
     pastelPink: "Pastel Pink",
     pastelBlue: "Pastel Blue",
     pastelPurple: "Pastel Purple",
+    dressColorsAria: "Dress code colors",
     mapEyebrow: "Find Your Way",
     mapTitle: "Wedding Location",
+    mapFrameTitle: "Wedding location map",
     openGoogleMaps: "Open Google Maps",
     gameEyebrow: "Mini Game Lounge",
     gameTitle: "Play Before You RSVP",
@@ -126,8 +128,10 @@ const TRANSLATIONS = {
     pastelPink: "粉色系",
     pastelBlue: "蓝色系",
     pastelPurple: "紫色系",
+    dressColorsAria: "着装配色",
     mapEyebrow: "前往会场",
     mapTitle: "婚礼地点",
+    mapFrameTitle: "婚礼地点地图",
     openGoogleMaps: "打开 Google 地图",
     gameEyebrow: "婚礼小游戏",
     gameTitle: "先玩游戏再回函",
@@ -165,6 +169,21 @@ function applyTranslations() {
       el.textContent = t(key);
     }
   });
+
+  document.querySelectorAll("[data-i18n-attr]").forEach((el) => {
+    const mappings = (el.getAttribute("data-i18n-attr") || "")
+      .split(";")
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+    mappings.forEach((mapping) => {
+      const [attr, key] = mapping.split(":").map((part) => part.trim());
+      if (attr && key) {
+        el.setAttribute(attr, t(key));
+      }
+    });
+  });
+
   const langToggle = document.getElementById("lang-toggle");
   if (langToggle) {
     langToggle.textContent = t("langToggle");
