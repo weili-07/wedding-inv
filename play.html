@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play & RSVP | Wei Li & Deborah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="play">
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header glass">
+    <a class="logo" href="index.html" data-i18n="welcomeLine">Welcome to our Beginning</a>
+    <nav>
+      <a href="index.html" data-i18n="navHome">Home</a>
+      <a href="story.html" data-i18n="navStory">Our Story</a>
+      <a href="map.html" data-i18n="navMap">Map</a>
+      <a href="play.html" class="active" data-i18n="navPlay">Play & RSVP</a>
+    </nav>
+    <button id="music-toggle" class="btn btn-outline" aria-pressed="false">Music On</button>
+  </header>
+
+  <main>
+    <section class="section reveal">
+      <p class="eyebrow" data-i18n="gameEyebrow">Mini Game Lounge</p>
+      <h1 data-i18n="gameTitle">Play Before You RSVP</h1>
+      <p class="lede" data-i18n="gameLede">Match our photos, then send your RSVP for 3rd October 2026.</p>
+    </section>
+
+    <section class="section game-grid reveal">
+      <article class="glass game-panel">
+        <h2 data-i18n="memoryTitle">Photo Pair Memory</h2>
+        <p data-i18n="memoryDesc">Match all photo cards to unlock RSVP access.</p>
+        <div class="game-status"><span data-i18n="movesLabel">Moves:</span> <span id="memory-moves">0</span></div>
+        <p id="game-gate-status" class="game-gate-status" data-i18n="gateLocked">Win the game to unlock RSVP.</p>
+        <div id="memory-grid" class="memory-grid"></div>
+        <div class="cta-row">
+          <button id="memory-reset" class="btn btn-outline" data-i18n="shuffle">Shuffle</button>
+          <button id="skip-game" class="btn btn-outline hidden" type="button" data-i18n="skipRsvp">Skip Game and RSVP</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="rsvp" class="section reveal hidden">
+      <div class="glass rsvp-card">
+        <p class="eyebrow" data-i18n="celebrateWithUs">Celebrate With Us</p>
+        <h2 data-i18n="rsvp">RSVP</h2>
+        <p class="lede"><span data-i18n="rsvpBy">Please RSVP by</span> <span data-bind="rsvpDeadline">15 Jun 2026</span>.</p>
+        <a class="btn btn-primary" href="https://docs.google.com/forms/d/1NDi_VwUSDZ5FXL6u212zRSRVwDwJJSfGdp9XD2r5mqo/edit" target="_blank" rel="noopener noreferrer" data-i18n="openRsvpForm">Open RSVP Form</a>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bg-music" loop preload="none">
+    <source src="assets/music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="lang-toggle" class="lang-toggle-btn" type="button">中文</button>
+
+  <script src="app.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

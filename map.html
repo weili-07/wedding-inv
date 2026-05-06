@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map | Wei Li & Deborah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="map">
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header glass">
+    <a class="logo" href="index.html" data-i18n="welcomeLine">Welcome to our Beginning</a>
+    <nav>
+      <a href="index.html" data-i18n="navHome">Home</a>
+      <a href="story.html" data-i18n="navStory">Our Story</a>
+      <a href="map.html" class="active" data-i18n="navMap">Map</a>
+      <a href="play.html" data-i18n="navPlay">Play & RSVP</a>
+    </nav>
+    <button id="music-toggle" class="btn btn-outline" aria-pressed="false">Music On</button>
+  </header>
+
+  <main>
+    <section class="section reveal">
+      <p class="eyebrow" data-i18n="mapEyebrow">Find Your Way</p>
+      <h1 data-i18n="mapTitle">Wedding Location</h1>
+      <p class="lede"><span data-i18n="venueLabel">Venue</span>: <span data-bind="venue">The Petals</span></p>
+    </section>
+
+    <section class="section reveal">
+      <div class="glass map-wrap">
+        <iframe
+          class="map-frame"
+          src="https://www.google.com/maps?q=The+Petals&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Wedding location map">
+        </iframe>
+        <a class="btn btn-primary" href="https://maps.app.goo.gl/2ZMKTMWw6iRfDqQ47" target="_blank" rel="noopener noreferrer" data-i18n="openGoogleMaps">Open Google Maps</a>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bg-music" loop preload="none">
+    <source src="assets/music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="lang-toggle" class="lang-toggle-btn" type="button">中文</button>
+
+  <script src="app.js"></script>
+</body>
+</html>

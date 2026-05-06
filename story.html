@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Celebration Details | Wei Li & Deborah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="story">
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header glass">
+    <a class="logo" href="index.html" data-i18n="welcomeLine">Welcome to our Beginning</a>
+    <nav>
+      <a href="index.html" data-i18n="navHome">Home</a>
+      <a href="story.html" class="active" data-i18n="navStory">Our Story</a>
+      <a href="map.html" data-i18n="navMap">Map</a>
+      <a href="play.html" data-i18n="navPlay">Play & RSVP</a>
+    </nav>
+    <button id="music-toggle" class="btn btn-outline" aria-pressed="false">Music On</button>
+  </header>
+
+  <main>
+    <section class="section reveal">
+      <p class="eyebrow" data-i18n="storyEyebrow">Futuristic Maker Vibes</p>
+      <h1 data-i18n="storyTitle">Celebration Details</h1>
+      <p class="lede" data-i18n="storyLede">Join Wei Li and Deborah for a warm celebration at The Petals. Layer by layer, loop by loop, we build one beautiful future together.</p>
+    </section>
+
+    <section class="section reveal">
+      <div class="glass timeline-item">
+        <h3 data-i18n="scheduleSnapshot">Schedule Timeline</h3>
+        <div class="schedule-timeline">
+          <div class="timeline-node">
+            <p class="timeline-time" data-i18n="timeReception">9:30 AM</p>
+            <p data-i18n="timelineReception">Reception and guest welcome.</p>
+          </div>
+          <div class="timeline-node">
+            <p class="timeline-time" data-i18n="timeCeremony">10:00 AM</p>
+            <p data-i18n="timelineCeremony">Wedding ceremony begins.</p>
+          </div>
+          <div class="timeline-node">
+            <p class="timeline-time" data-i18n="timeLunch">11:30 AM</p>
+            <p data-i18n="timelineLunch">Lunch and celebration at The Petals.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h2 data-i18n="dressCode">Dress Code Palette</h2>
+      <div class="palette-grid">
+        <div class="swatch" style="--swatch:#f7cfe8"><span data-i18n="pastelPink">Pastel Pink</span></div>
+        <div class="swatch" style="--swatch:#cde8ff"><span data-i18n="pastelBlue">Pastel Blue</span></div>
+        <div class="swatch" style="--swatch:#e3d6ff"><span data-i18n="pastelPurple">Pastel Purple</span></div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bg-music" loop preload="none">
+    <source src="assets/music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="lang-toggle" class="lang-toggle-btn" type="button">中文</button>
+
+  <script src="app.js"></script>
+</body>
+</html>

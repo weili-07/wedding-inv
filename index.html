@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wei Li & Deborah | Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="home">
+  <div id="intro-overlay" class="intro-overlay">
+    <div class="intro-card">
+      <p class="eyebrow" data-i18n="introEyebrow">A Cinematic Invitation</p>
+      <h1 data-i18n="welcomeLine">Welcome to our Beginning</h1>
+      <p class="muted" data-i18n="introSubtitle">A futuristic maker celebration for Wei Li and Deborah.</p>
+      <button id="enter-site" class="btn btn-primary" data-i18n="enterInvitation">Enter Invitation</button>
+    </div>
+  </div>
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header glass">
+    <a class="logo" href="index.html" data-i18n="welcomeLine">Welcome to our Beginning</a>
+    <nav>
+      <a href="index.html" class="active" data-i18n="navHome">Home</a>
+      <a href="story.html" data-i18n="navStory">Our Story</a>
+      <a href="map.html" data-i18n="navMap">Map</a>
+      <a href="play.html" data-i18n="navPlay">Play & RSVP</a>
+    </nav>
+    <button id="music-toggle" class="btn btn-outline" aria-pressed="false">Music On</button>
+  </header>
+
+  <main>
+    <section class="hero section parallax-wrap">
+      <div class="hero-content reveal">
+        <p class="eyebrow" data-i18n="homeTogether">Together with love and joy</p>
+        <h1>
+          <span data-bind="name1">Wei Li</span>
+          <span class="amp">&</span>
+          <span data-bind="name2">Deborah</span>
+        </h1>
+        <p class="lede" data-i18n="welcomeLinePunctuated">Welcome to our Beginning.</p>
+        <div class="hero-meta">
+          <div>
+            <p class="meta-title" data-i18n="dateLabel">Date</p>
+            <p data-bind="date">Saturday, 3rd Oct 2026</p>
+          </div>
+          <div>
+            <p class="meta-title" data-i18n="venueLabel">Venue</p>
+            <p data-bind="venue">The Petals</p>
+          </div>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="play.html#rsvp" data-i18n="rsvp">RSVP</a>
+          <a class="btn btn-outline" href="story.html" data-i18n="watchJourney">Watch Our Journey</a>
+        </div>
+      </div>
+      <div class="hero-art reveal"></div>
+    </section>
+
+    <section class="section reveal">
+      <div class="countdown-wrap glass">
+        <p class="eyebrow" data-i18n="countdownEyebrow">Countdown to "I do"</p>
+        <div id="countdown" class="countdown">
+          <div><span id="days">0</span><small data-i18n="days">Days</small></div>
+          <div><span id="hours">0</span><small data-i18n="hours">Hours</small></div>
+          <div><span id="minutes">0</span><small data-i18n="minutes">Minutes</small></div>
+          <div><span id="seconds">0</span><small data-i18n="seconds">Seconds</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h2 data-i18n="eveningFlow">Evening Flow</h2>
+      <div class="event-grid">
+        <article class="glass">
+          <h3 data-i18n="scheduleReception">Reception</h3>
+          <p data-i18n="scheduleReceptionDetail">9:30 AM | Guests arrival and welcome.</p>
+        </article>
+        <article class="glass">
+          <h3 data-i18n="scheduleCeremony">Ceremony</h3>
+          <p data-i18n="scheduleCeremonyDetail">10:00 AM | Wedding ceremony begins.</p>
+        </article>
+        <article class="glass">
+          <h3 data-i18n="scheduleLunch">Lunch</h3>
+          <p data-i18n="scheduleLunchDetail">11:30 AM | Lunch and celebration.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bg-music" loop preload="none">
+    <source src="assets/music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="lang-toggle" class="lang-toggle-btn" type="button">中文</button>
+
+  <script src="app.js"></script>
+</body>
+</html>
