@@ -1,0 +1,28 @@
+<section class="section reveal">
+  <p class="eyebrow" data-i18n="gameEyebrow">Mini Game Lounge</p>
+  <h1 data-i18n="gameTitle">Play Before You RSVP</h1>
+  <p class="lede" data-i18n="gameLede">Match our photos, then send your RSVP for 3rd October 2026.</p>
+</section>
+
+<section class="section game-grid reveal">
+  <article class="glass game-panel">
+    <h2 data-i18n="memoryTitle">Photo Pair Memory</h2>
+    <p data-i18n="memoryDesc">Match all photo cards to unlock RSVP access.</p>
+    <div class="game-status"><span data-i18n="movesLabel">Moves:</span> <span id="memory-moves">0</span></div>
+    <p id="game-gate-status" class="game-gate-status" data-i18n="gateLocked">Win the game to unlock RSVP.</p>
+    <div id="memory-grid" class="memory-grid"></div>
+    <div class="cta-row">
+      <button id="memory-reset" class="btn btn-outline" data-i18n="shuffle">Shuffle</button>
+      <button id="skip-game" class="btn btn-outline hidden" type="button" data-i18n="skipRsvp">Skip Game and RSVP</button>
+    </div>
+  </article>
+</section>
+
+<section id="rsvp" class="section reveal hidden">
+  <div class="glass rsvp-card">
+    <p class="eyebrow" data-i18n="celebrateWithUs">Celebrate With Us</p>
+    <h2 data-i18n="rsvp">RSVP</h2>
+    <p class="lede"><span data-i18n="rsvpBy">Please RSVP by</span> <span data-bind="rsvpDeadline">15 Jun 2026</span>.</p>
+    <a class="btn btn-primary" href="https://docs.google.com/forms/d/1NDi_VwUSDZ5FXL6u212zRSRVwDwJJSfGdp9XD2r5mqo/edit" target="_blank" rel="noopener noreferrer" data-i18n="openRsvpForm">Open RSVP Form</a>
+  </div>
+</section>

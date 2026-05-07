@@ -1,6 +1,6 @@
 function setupMemoryGame() {
   const photos = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
-  const backIcons = ["🧶", "🛡️"];
+  const backIcons = ["🧶", "🐢"];
   const grid = document.getElementById("memory-grid");
   const reset = document.getElementById("memory-reset");
   const movesEl = document.getElementById("memory-moves");
@@ -191,4 +191,5 @@ function setupMemoryGame() {
   buildBoard();
 }
 
-setupMemoryGame();
+// Don't auto-init; router will call setupMemoryGame when on play page
+// setupMemoryGame();

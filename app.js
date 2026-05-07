@@ -27,7 +27,7 @@ const TRANSLATIONS = {
     dateLabel: "Date",
     venueLabel: "Venue",
     rsvp: "RSVP",
-    watchJourney: "Watch Our Journey",
+    watchJourney: "See more details",
     sloganTitle: "Layer by layer, loop by loop, we build one beautiful future together.",
     sloganBody: "Crafted by precision and stitched with love.",
     countdownEyebrow: "Countdown to \"I do\"",
@@ -37,21 +37,21 @@ const TRANSLATIONS = {
     seconds: "Seconds",
     eveningFlow: "Evening Flow",
     scheduleReception: "Reception",
-    scheduleReceptionDetail: "9:30 AM | Guests arrival and welcome.",
+    scheduleReceptionDetail: "9:30 AM | 💐 Guests arrival and welcome.",
     scheduleCeremony: "Ceremony",
-    scheduleCeremonyDetail: "10:00 AM | Wedding ceremony begins.",
+    scheduleCeremonyDetail: "10:00 AM | 💍 Wedding ceremony begins.",
     scheduleLunch: "Lunch",
-    scheduleLunchDetail: "11:30 AM | Lunch and celebration.",
+    scheduleLunchDetail: "11:30 AM | 🍣 Sushi-style buffet will be served.",
     storyEyebrow: "Wedding Celebration",
     storyTitle: "Celebration Details",
     storyLede: "Join Wei Li and Deborah for a warm celebration at The Petals. Layer by layer, loop by loop, we build one beautiful future together.",
     scheduleSnapshot: "Schedule Timeline",
     timeReception: "9:30 AM",
-    timelineReception: "Reception and guest welcome.",
+    timelineReception: "💐 Reception and guest welcome.",
     timeCeremony: "10:00 AM",
-    timelineCeremony: "Wedding ceremony begins.",
+    timelineCeremony: "💍 Wedding ceremony begins.",
     timeLunch: "11:30 AM",
-    timelineLunch: "Lunch and celebration at The Petals.",
+    timelineLunch: "🍣 Sushi-style buffet will be served.",
     dressCode: "Dress Code Palette",
     dressCodeFormal: "Dress Code: Formal",
     weddingWord: "Wedding",
@@ -98,14 +98,14 @@ const TRANSLATIONS = {
     introSubtitle: "诚邀您一同见证 Wei Li 和 Deborah 的幸福时刻。",
     enterInvitation: "进入邀请函",
     navHome: "首页",
-    navStory: "庆典详情",
+    navStory: "详情",
     navMap: "地图",
     navPlay: "游戏与回函",
     homeTogether: "携手同心，满怀喜悦",
     dateLabel: "日期",
     venueLabel: "地点",
     rsvp: "回函",
-    watchJourney: "观看我们的旅程",
+    watchJourney: "查看更多详情",
     sloganTitle: "一层层构筑，一针针编织，我们共同创造美好未来。",
     sloganBody: "以精密雕刻，用爱意缝合。",
     countdownEyebrow: "距离婚礼倒数",
@@ -115,21 +115,21 @@ const TRANSLATIONS = {
     seconds: "秒",
     eveningFlow: "婚礼流程",
     scheduleReception: "迎宾",
-    scheduleReceptionDetail: "上午 9:30 | 来宾签到与欢迎。",
+    scheduleReceptionDetail: "上午 9:30 | 💐 来宾签到与欢迎。",
     scheduleCeremony: "仪式",
-    scheduleCeremonyDetail: "上午 10:00 | 婚礼仪式开始。",
+    scheduleCeremonyDetail: "上午 10:00 | 💍 婚礼仪式开始。",
     scheduleLunch: "午宴",
-    scheduleLunchDetail: "上午 11:30 | 午宴与庆祝。",
+    scheduleLunchDetail: "上午 11:30 | 将提供 🍣 寿司风自助餐。",
     storyEyebrow: "婚礼庆典",
-    storyTitle: "庆典详情",
+    storyTitle: "详情",
     storyLede: "诚邀您在 The Petals 见证 Wei Li 与 Deborah 的幸福时刻。一层层构筑，一针针编织，我们共同创造美好未来。",
     scheduleSnapshot: "时间轴流程",
     timeReception: "上午 9:30",
-    timelineReception: "迎宾与来宾签到。",
+    timelineReception: "💐 迎宾与来宾签到。",
     timeCeremony: "上午 10:00",
-    timelineCeremony: "婚礼仪式正式开始。",
+    timelineCeremony: "💍 婚礼仪式正式开始。",
     timeLunch: "上午 11:30",
-    timelineLunch: "在 The Petals 享用午宴与庆祝。",
+    timelineLunch: "将提供 🍣 寿司风自助餐。",
     dressCode: "着装色系",
     dressCodeFormal: "着装要求：正式",
     weddingWord: "婚礼",
@@ -249,10 +249,28 @@ function setupIntro() {
   const enterButton = document.getElementById("enter-site");
   if (!overlay || !enterButton) return;
 
+  // Always show intro first, then enter the app.
+  overlay.classList.remove("hidden");
+
   enterButton.addEventListener("click", async () => {
+    console.log("🎬 Intro: Enter button clicked");
     overlay.classList.add("hidden");
+
+    // Always start music from the beginning after entering.
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    localStorage.removeItem(MUSIC_TIME_KEY);
+
     await toggleMusic(true);
-  });
+    // Load requested hash page if present, otherwise home.
+    if (window.loadPage) {
+      const firstPage = window.location.hash.slice(1) || "home";
+      console.log(`🎬 Intro: Calling loadPage("${firstPage}")`);
+      await window.loadPage(firstPage);
+    }
+  }, { once: true });
 }
 
 function setupRevealAnimations() {
@@ -267,7 +285,10 @@ function setupRevealAnimations() {
     { threshold: 0.12 }
   );
 
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  document.querySelectorAll(".reveal").forEach((el) => {
+    el.classList.remove("show"); // Reset animation state
+    observer.observe(el);
+  });
 }
 
 function setupTiltCards() {
@@ -287,9 +308,14 @@ function setupTiltCards() {
   });
 }
 
+let countdownInterval = null;
+
 function setupCountdown() {
   const ids = ["days", "hours", "minutes", "seconds"];
   if (!ids.every((id) => document.getElementById(id))) return;
+
+  // Clear existing interval if any
+  if (countdownInterval) clearInterval(countdownInterval);
 
   function tick() {
     const target = new Date(INVITE_DATA.dateISO).getTime();
@@ -308,7 +334,7 @@ function setupCountdown() {
   }
 
   tick();
-  setInterval(tick, 1000);
+  countdownInterval = setInterval(tick, 1000);
 }
 
 function setupBackgroundCanvas() {
@@ -459,14 +485,42 @@ function setupMusicControl() {
   }
 
   window.addEventListener("beforeunload", persistMusicState);
-  restoreMusicState();
+
+  // Do not auto-start or resume before Enter Invitation is pressed.
+  musicToggle.checked = false;
+  updateMusicButtonText();
 }
 
-bindInviteData();
-setupLanguageToggle();
-setupIntro();
-setupRevealAnimations();
-setupTiltCards();
-setupCountdown();
-setupBackgroundCanvas();
-setupMusicControl();
+// Initialize on first load and page changes
+let appInitialized = false;
+let introSetup = false;
+
+function initializeApp() {
+  if (!appInitialized) {
+    setupLanguageToggle();
+    setupMusicControl();
+    setupBackgroundCanvas();
+    appInitialized = true;
+  }
+
+  // Only setup intro once, on very first load
+  if (!introSetup) {
+    setupIntro();
+    introSetup = true;
+  }
+
+  // Run on every page load
+  bindInviteData();
+  applyTranslations();
+  setupRevealAnimations();
+  setupTiltCards();
+  setupCountdown();
+}
+
+// Initialize immediately
+initializeApp();
+
+// Re-init on page changes
+window.addEventListener("pageLoaded", () => {
+  initializeApp();
+});
