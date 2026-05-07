@@ -3,7 +3,7 @@ const INVITE_DATA = {
   name2: "Deborah",
   dateISO: "2026-10-03T09:30:00",
   date: "Saturday, 3rd Oct 2026",
-  venue: "The Petals",
+  venue: "The Petals, 2-2-2 Taman Ria, Jalan Bukit Gemuruh, Kampung Tengah, 11920, Pulau Pinang, Malaysia",
   rsvpDeadline: "15 Jun 2026"
 };
 
@@ -240,6 +240,17 @@ function bindInviteData() {
       el.textContent = INVITE_DATA[key];
     }
   });
+}
+
+function normalizeHomeMeta() {
+  // If stale cached HTML still contains the old left-side meta block, remove it.
+  const page = document.body.getAttribute("data-page") || window.location.hash.slice(1);
+  if (page !== "home") return;
+
+  const legacyMeta = document.querySelector(".hero-content .hero-meta");
+  if (legacyMeta) {
+    legacyMeta.remove();
+  }
 }
 
 function setupIntro() {
@@ -509,6 +520,7 @@ function initializeApp() {
 
   // Run on every page load
   bindInviteData();
+  normalizeHomeMeta();
   applyTranslations();
   setupRevealAnimations();
   setupTiltCards();
