@@ -321,6 +321,8 @@ main {
 
 .timeline-item {
   padding: 1rem;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 .schedule-timeline {
@@ -386,19 +388,16 @@ main {
 }
 
 .attire-title {
-  display: flex;
-  align-items: baseline;
-  gap: 0.7rem;
+  font-family: "Great Vibes", cursive;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  line-height: 0.9;
   margin-bottom: 0.75rem;
 }
 
 .attire-title em {
-  font-family: "Great Vibes", cursive;
-  font-style: normal;
-  font-weight: 400;
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
-  line-height: 0.9;
-  margin-left: 0.2rem;
+  font-style: italic;
 }
 
 .attire-note {
@@ -750,5 +749,34 @@ main {
     right: 0.7rem;
     bottom: 0.85rem;
     padding: 0.5rem 0.75rem;
+  .eyebrow,
+  .hero h1,
+  .hero p,
+  h1,
+  h2,
+  h3,
+  .lede,
+  .card-crochet,
+  .tilt-card,
+  .attire-card,
+  .glass,
+  .attire-dots,
+  .attire-thanks,
+  .attire-note,
+  .section p,
+  .section h2,
+  .rsvp-card,
+  .game-panel {
+    text-align: center;
   }
+
+  .attire-dots {
+    justify-content: center;
+  }
+
+  .schedule-timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 }
