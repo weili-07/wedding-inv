@@ -121,7 +121,7 @@ const TRANSLATIONS = {
     scheduleLunchDetail: "上午 11:30 | 将提供 🍣 寿司风自助餐。",
     storyEyebrow: "婚礼庆典",
     storyTitle: "详情",
-    storyLede: "诚邀您在 The Petals 见证 Wei Li 与 Deborah 的幸福时刻。一层层构筑，一针针编织，我们共同创造美好未来。",
+    storyLede: "诚邀您在 The Petals 见证 Wei Li 与 Deborah 的幸福时刻。我们共同创造美好未来。",
     scheduleSnapshot: "时间轴流程",
     timeReception: "上午 9:30",
     timelineReception: "💐 迎宾与来宾签到。",
