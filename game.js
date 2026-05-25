@@ -116,13 +116,25 @@ function setupMemoryGame() {
       back.className = "card-back";
       back.textContent = backIcons[Math.floor(Math.random() * backIcons.length)];
 
+      const picture = document.createElement("picture");
+      const source = document.createElement("source");
+      source.srcset = `assets/photos/${filename.replace(".jpg", ".webp")}`;
+      source.type = "image/webp";
+
       const img = document.createElement("img");
       img.src = `assets/photos/${filename}`;
-      img.alt = "Memory photo";
+      img.alt = "Wedding memory photo";
       img.className = "memory-image";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.width = 200;
+      img.height = 200;
+
+      picture.appendChild(source);
+      picture.appendChild(img);
 
       button.appendChild(back);
-      button.appendChild(img);
+      button.appendChild(picture);
       grid.appendChild(button);
     });
 
