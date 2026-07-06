@@ -4,7 +4,7 @@ const INVITE_DATA = {
   dateISO: "2026-10-03T09:30:00",
   date: "Saturday, 3rd Oct 2026",
   venue: "The Petals, 2-2-2 Taman Ria, Jalan Bukit Gemuruh, Kampung Tengah, 11920, Pulau Pinang, Malaysia",
-  rsvpDeadline: "21 Jun 2026"
+  rsvpDeadline: "30 Jul 2026"
 };
 
 const LANG_KEY = "inviteLang";
